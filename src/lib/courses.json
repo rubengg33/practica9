@@ -1,0 +1,205 @@
+{
+    "courses": [
+      {
+        "id": 0,
+      "imagen": "url_de_imagen_curso_0",
+      "titulo": "Introducción a HTML y CSS",
+      "descripcion": "Aprende los fundamentos del diseño web usando HTML y CSS. Ideal para principiantes.",
+      "descripcion_resumida": "Introducción a los lenguajes básicos del desarrollo web.",
+      "precio": 49.99,
+      "instructor": "Juan Pérez",
+      "purchased": false,
+      "duracion": "5 horas",
+      "nivel": "Básico",
+      "temario": [
+        "Módulo 1: Introducción al HTML",
+        "Módulo 2: Estructura de un documento HTML",
+        "Módulo 3: Introducción al CSS",
+        "Módulo 4: Selectores y propiedades CSS",
+        "Módulo 5: Diseño responsivo con CSS"
+      ]
+      },
+      {
+        "id": 2,
+        "imagen": "url_de_imagen_curso_2",
+        "titulo": "HTML y CSS avanzado",
+        "descripcion": "Domina las técnicas avanzadas de HTML y CSS para crear sitios web profesionales y complejos.",
+        "descripcion_resumida": "Perfecciona tus habilidades en HTML y CSS.",
+        "precio": 79.99,
+        "instructor": "Carlos Martínez",
+        "purchased": false,
+        "duracion": "8 horas",
+        "nivel": "Intermedio",
+        "temario": [
+          "Módulo 1: Flexbox y Grid",
+          "Módulo 2: Animaciones con CSS",
+          "Módulo 3: CSS Variables y Custom Properties",
+          "Módulo 4: Accesibilidad en HTML y CSS",
+          "Módulo 5: Diseño avanzado con CSS"
+        ]
+      },
+      {
+        "id": 1,
+        "imagen": "url_de_imagen_curso_1",
+        "titulo": "Introducción a JavaScript",
+        "descripcion": "Un curso básico para entender la programación en JavaScript, ideal para comenzar en la programación web.",
+        "descripcion_resumida": "Aprende JavaScript desde cero.",
+        "precio": 59.99,
+        "instructor": "Ana Gómez",
+        "purchased": false,
+        "duracion": "6 horas",
+        "nivel": "Básico",
+        "temario": [
+          "Módulo 1: Sintaxis y variables",
+          "Módulo 2: Funciones y estructuras de control",
+          "Módulo 3: Manipulación del DOM",
+          "Módulo 4: Eventos en JavaScript",
+          "Módulo 5: Introducción a Fetch API"
+        ]
+      },
+      {
+       "id": 3,
+       "imagen": "url_de_imagen_curso_3",
+       "titulo": "JavaScript avanzado",
+       "descripcion": "Profundiza en JavaScript con conceptos avanzados como asincronía, promesas, y frameworks.",
+       "descripcion_resumida": "Perfecciona tus conocimientos en JavaScript.",
+       "precio": 89.99,
+       "instructor": "Laura Sánchez",
+       "purchased": false,
+       "duracion": "10 horas",
+       "nivel": "Avanzado",
+       "temario": [
+         "Módulo 1: Clases y programación orientada a objetos",
+         "Módulo 2: Asincronía y Promesas",
+         "Módulo 3: Fetch API y consumo de APIs",
+         "Módulo 4: Módulos en JavaScript",
+         "Módulo 5: Introducción a TypeScript"
+       ]
+      },
+      {
+        "id": 4,
+        "imagen": "url_de_imagen_curso_4",
+        "titulo": "React",
+        "descripcion": "Aprende a construir aplicaciones web modernas con React, la librería más popular para el desarrollo frontend.",
+        "descripcion_resumida": "Curso de React para crear aplicaciones web interactivas.",
+        "precio": 99.99,
+        "instructor": "José Ramírez",
+        "purchased": false,
+        "duracion": "12 horas",
+        "nivel": "Intermedio",
+        "temario": [
+          "Módulo 1: Fundamentos de React",
+          "Módulo 2: Componentes y Props",
+          "Módulo 3: Estado y Ciclo de Vida",
+          "Módulo 4: Hooks en React",
+          "Módulo 5: React Router y navegación"
+        ]
+      },
+      {
+       "id": 5,
+      "imagen": "url_de_imagen_curso_5",
+      "titulo": "Vue",
+      "descripcion": "Domina Vue.js, un framework progresivo para crear interfaces de usuario dinámicas.",
+      "descripcion_resumida": "Crea aplicaciones web con Vue.js.",
+      "precio": 79.99,
+      "instructor": "Marta Fernández",
+      "purchased": false,
+      "duracion": "10 horas",
+      "nivel": "Intermedio",
+      "temario": [
+        "Módulo 1: Introducción a Vue.js",
+        "Módulo 2: Componentes y Directivas",
+        "Módulo 3: Manejo del Estado con Vuex",
+        "Módulo 4: Rutas con Vue Router",
+        "Módulo 5: Integración con APIs"
+      ]
+      },
+      {
+        "id": 6,
+        "imagen": "url_de_imagen_curso_6",
+        "titulo": "Angular",
+        "descripcion": "Aprende Angular para construir aplicaciones web de una sola página (SPA) rápidas y escalables.",
+        "descripcion_resumida": "Curso completo de Angular para desarrollo frontend.",
+        "precio": 89.99,
+        "instructor": "Pedro López",
+        "purchased": false
+      },
+      {
+        "id": 7,
+        "imagen": "url_de_imagen_curso_7",
+        "titulo": "Firebase",
+        "descripcion": "Conoce Firebase para crear aplicaciones backend sin servidor con bases de datos en tiempo real y autenticación.",
+        "descripcion_resumida": "Aprende a usar Firebase para aplicaciones web y móviles.",
+        "precio": 69.99,
+        "instructor": "Sofia Ruiz",
+        "purchased": false
+      },
+      {
+        "id": 8,
+        "imagen": "url_de_imagen_curso_8",
+        "titulo": "Node.js",
+        "descripcion": "Aprende Node.js para desarrollar aplicaciones backend rápidas y escalables con JavaScript.",
+        "descripcion_resumida": "Curso de Node.js para crear servidores backend.",
+        "precio": 89.99,
+        "instructor": "David Gómez",
+        "purchased": false
+      },
+      {
+        "id": 9,
+        "imagen": "url_de_imagen_curso_9",
+        "titulo": "Git y GitHub",
+        "descripcion": "Aprende a usar Git para el control de versiones y GitHub para colaboración en proyectos de desarrollo.",
+        "descripcion_resumida": "Domina el control de versiones con Git y GitHub.",
+        "precio": 49.99,
+        "instructor": "Raúl Díaz",
+        "purchased": false
+      },
+      {
+        "id": 10,
+        "imagen": "url_de_imagen_curso_10",
+        "titulo": "Astro",
+        "descripcion": "Aprende Astro, el nuevo framework para construir sitios web rápidos y optimizados.",
+        "descripcion_resumida": "Desarrolla sitios web rápidos con Astro.",
+        "precio": 79.99,
+        "instructor": "Elena Pérez",
+        "purchased": false
+      },
+      {
+        "id": 11,
+        "imagen": "url_de_imagen_curso_11",
+        "titulo": "Python y Django",
+        "descripcion": "Curso completo de Python con Django para crear aplicaciones web robustas y escalables.",
+        "descripcion_resumida": "Aprende a desarrollar con Python y Django.",
+        "precio": 99.99,
+        "instructor": "Luis Rodríguez",
+        "purchased": false
+      },
+      {
+        "id": 12,
+        "imagen": "url_de_imagen_curso_12",
+        "titulo": "AI y Machine Learning",
+        "descripcion": "Conoce los fundamentos de la inteligencia artificial y el aprendizaje automático usando Python.",
+        "descripcion_resumida": "Curso de IA y Machine Learning para principiantes.",
+        "precio": 109.99,
+        "instructor": "Fernando Martínez",
+        "purchased": false
+      }
+    ],
+        "users": [
+          {
+            "id_user": 0,
+            "username": "pepe",
+            "password": "hashed_password_pepe",
+            "foto_perfil": "url_de_imagen_pepe",
+            "purchased_courses": [0, 2, 4] 
+          },
+          {
+            "id_user": 1,
+            "username": "prueba",
+            "password": "hashed_password_prueba",
+            "foto_perfil": "url_de_imagen_prueba",
+            "purchased_courses": [1, 3, 5]
+          }
+        ]
+      }
+  
