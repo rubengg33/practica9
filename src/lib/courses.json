@@ -113,77 +113,8 @@
         "Módulo 4: Rutas con Vue Router",
         "Módulo 5: Integración con APIs"
       ]
-      },
-      {
-        "id": 6,
-        "imagen": "url_de_imagen_curso_6",
-        "titulo": "Angular",
-        "descripcion": "Aprende Angular para construir aplicaciones web de una sola página (SPA) rápidas y escalables.",
-        "descripcion_resumida": "Curso completo de Angular para desarrollo frontend.",
-        "precio": 89.99,
-        "instructor": "Pedro López",
-        "purchased": false
-      },
-      {
-        "id": 7,
-        "imagen": "url_de_imagen_curso_7",
-        "titulo": "Firebase",
-        "descripcion": "Conoce Firebase para crear aplicaciones backend sin servidor con bases de datos en tiempo real y autenticación.",
-        "descripcion_resumida": "Aprende a usar Firebase para aplicaciones web y móviles.",
-        "precio": 69.99,
-        "instructor": "Sofia Ruiz",
-        "purchased": false
-      },
-      {
-        "id": 8,
-        "imagen": "url_de_imagen_curso_8",
-        "titulo": "Node.js",
-        "descripcion": "Aprende Node.js para desarrollar aplicaciones backend rápidas y escalables con JavaScript.",
-        "descripcion_resumida": "Curso de Node.js para crear servidores backend.",
-        "precio": 89.99,
-        "instructor": "David Gómez",
-        "purchased": false
-      },
-      {
-        "id": 9,
-        "imagen": "url_de_imagen_curso_9",
-        "titulo": "Git y GitHub",
-        "descripcion": "Aprende a usar Git para el control de versiones y GitHub para colaboración en proyectos de desarrollo.",
-        "descripcion_resumida": "Domina el control de versiones con Git y GitHub.",
-        "precio": 49.99,
-        "instructor": "Raúl Díaz",
-        "purchased": false
-      },
-      {
-        "id": 10,
-        "imagen": "url_de_imagen_curso_10",
-        "titulo": "Astro",
-        "descripcion": "Aprende Astro, el nuevo framework para construir sitios web rápidos y optimizados.",
-        "descripcion_resumida": "Desarrolla sitios web rápidos con Astro.",
-        "precio": 79.99,
-        "instructor": "Elena Pérez",
-        "purchased": false
-      },
-      {
-        "id": 11,
-        "imagen": "url_de_imagen_curso_11",
-        "titulo": "Python y Django",
-        "descripcion": "Curso completo de Python con Django para crear aplicaciones web robustas y escalables.",
-        "descripcion_resumida": "Aprende a desarrollar con Python y Django.",
-        "precio": 99.99,
-        "instructor": "Luis Rodríguez",
-        "purchased": false
-      },
-      {
-        "id": 12,
-        "imagen": "url_de_imagen_curso_12",
-        "titulo": "AI y Machine Learning",
-        "descripcion": "Conoce los fundamentos de la inteligencia artificial y el aprendizaje automático usando Python.",
-        "descripcion_resumida": "Curso de IA y Machine Learning para principiantes.",
-        "precio": 109.99,
-        "instructor": "Fernando Martínez",
-        "purchased": false
       }
+      
     ],
         "users": [
           {

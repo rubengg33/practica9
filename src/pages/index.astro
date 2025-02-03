@@ -1,23 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import CoursesList from "../components/CoursesList";
+import { getCourses } from "../lib/courses";
+import CourseCard from "../components/CourseCard.astro";
 
-// URL de tu Firebase Realtime Database (cursos es el nodo donde están los cursos)
-const dbURL = "https://practica9-32729-default-rtdb.europe-west1.firebasedatabase.app/courses.json";
-
-// Cargar los cursos desde Firebase Realtime Database usando `fetch`
-const courses = await fetch(dbURL)
-  .then(response => response.json())
-  .then(data => data);
-
-// Si la respuesta es un objeto, conviértelo a un array (Firebase lo devuelve como un objeto con claves)
-const courseArray = Object.keys(courses).map(key => ({
-  id: key,
-  ...courses[key],
-}));
+const courses = await getCourses();
 ---
 
 <Layout>
-  <h1 class="text-3xl font-bold mb-6">Nuestros Cursos</h1>
-  <CoursesList courses={courseArray} />
+  <CourseCard courses{courses} />
 </Layout>
