@@ -2,7 +2,7 @@
     "courses": [
       {
         "id": 0,
-      "imagen": "url_de_imagen_curso_0",
+      "imagen": "https://www.aipbarcelona.com/wp-content/uploads/2016/08/csss3-html5-aip-barcelona.png",
       "titulo": "Introducción a HTML y CSS",
       "descripcion": "Aprende los fundamentos del diseño web usando HTML y CSS. Ideal para principiantes.",
       "descripcion_resumida": "Introducción a los lenguajes básicos del desarrollo web.",
@@ -17,11 +17,12 @@
         "Módulo 3: Introducción al CSS",
         "Módulo 4: Selectores y propiedades CSS",
         "Módulo 5: Diseño responsivo con CSS"
-      ]
+      ],
+      "slug" : "course-0"
       },
       {
-        "id": 2,
-        "imagen": "url_de_imagen_curso_2",
+        "id": 1,
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRClNkOwU-euL7ghTNBdQHaPshclE0DXfhgOw&s",
         "titulo": "HTML y CSS avanzado",
         "descripcion": "Domina las técnicas avanzadas de HTML y CSS para crear sitios web profesionales y complejos.",
         "descripcion_resumida": "Perfecciona tus habilidades en HTML y CSS.",
@@ -36,11 +37,12 @@
           "Módulo 3: CSS Variables y Custom Properties",
           "Módulo 4: Accesibilidad en HTML y CSS",
           "Módulo 5: Diseño avanzado con CSS"
-        ]
+        ],
+        "slug" : "course-1"
       },
       {
-        "id": 1,
-        "imagen": "url_de_imagen_curso_1",
+        "id": 2,
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRNrWoqrT-NPOct542Foe7fBCtS3MzL8-LlSw&s",
         "titulo": "Introducción a JavaScript",
         "descripcion": "Un curso básico para entender la programación en JavaScript, ideal para comenzar en la programación web.",
         "descripcion_resumida": "Aprende JavaScript desde cero.",
@@ -55,11 +57,12 @@
           "Módulo 3: Manipulación del DOM",
           "Módulo 4: Eventos en JavaScript",
           "Módulo 5: Introducción a Fetch API"
-        ]
+        ],
+        "slug" : "course-2"
       },
       {
        "id": 3,
-       "imagen": "url_de_imagen_curso_3",
+       "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnM0Lmw0mT-RNPUEqrnSX83ZPNmyNInqACMg&s",
        "titulo": "JavaScript avanzado",
        "descripcion": "Profundiza en JavaScript con conceptos avanzados como asincronía, promesas, y frameworks.",
        "descripcion_resumida": "Perfecciona tus conocimientos en JavaScript.",
@@ -74,11 +77,12 @@
          "Módulo 3: Fetch API y consumo de APIs",
          "Módulo 4: Módulos en JavaScript",
          "Módulo 5: Introducción a TypeScript"
-       ]
+       ],
+       "slug" : "course-3"
       },
       {
         "id": 4,
-        "imagen": "url_de_imagen_curso_4",
+        "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwkDwVI1_peneNUpo3spAw1EBymnYhATIlCg&s",
         "titulo": "React",
         "descripcion": "Aprende a construir aplicaciones web modernas con React, la librería más popular para el desarrollo frontend.",
         "descripcion_resumida": "Curso de React para crear aplicaciones web interactivas.",
@@ -93,11 +97,12 @@
           "Módulo 3: Estado y Ciclo de Vida",
           "Módulo 4: Hooks en React",
           "Módulo 5: React Router y navegación"
-        ]
+        ],
+        "slug" : "course-4"
       },
       {
        "id": 5,
-      "imagen": "url_de_imagen_curso_5",
+      "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9fbJV_shWHyisa5BP4q-bG1S-NYotr3_59g&s",
       "titulo": "Vue",
       "descripcion": "Domina Vue.js, un framework progresivo para crear interfaces de usuario dinámicas.",
       "descripcion_resumida": "Crea aplicaciones web con Vue.js.",
@@ -112,7 +117,8 @@
         "Módulo 3: Manejo del Estado con Vuex",
         "Módulo 4: Rutas con Vue Router",
         "Módulo 5: Integración con APIs"
-      ]
+      ],
+      "slug" : "course-5"
       }
       
     ],

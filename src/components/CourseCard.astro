@@ -1,25 +1,58 @@
 ---
 const { courses } = Astro.props as { courses: any[]; };
 ---
-<div class="container my-12 mx-auto px-4 md:px-12">
-  <div class="flex flex-wrap -mx-1 lg:-mx-4">
+
+<div class="container mx-auto my-12 px-4 sm:px-6 lg:px-12">
+  <div class="flex flex-wrap -mx-2">
     {courses.map((item) => (
-      <div class="my-1 px-1 w-full md:w-1/2 lg:my-4 lg:px-4 lg:w-1/3 border-transparent hover:border-white border-2 rounded-3xl">
-        <article class="overflow-hidden rounded-lg shadow-lg">
-          <a href={`/blog/${item.slug}`}>
-            <img alt="Placeholder" class="block h-auto w-full object-cover" src={item.image} />
+      <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
+        {/* Contenedor del card con altura mínima uniforme */}
+        <article class="flex flex-col h-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-200">
+          {/* Imagen */}
+          <a href={`/course/${item.slug}`}>
+            <img
+              src={item.imagen}
+              alt={item.titulo}
+              class="w-full h-40 object-cover"
+            />
           </a>
-
-          <header class="flex items-center justify-between leading-tight p-2 md:p-4">
-            <h1 class="text-lg">
-              <a class="no-underline hover:underline text-white font-bold" href={`/blog/${item.slug}`}>
-                {item.title}
-              </a>
-            </h1>
-          </header>
-
-          <footer class="flex items-center justify-between leading-none p-2 md:p-4">
-          </footer>
+          {/* Contenido */}
+          <div class="flex flex-col flex-grow">
+            <header class="p-4">
+              <h2 class="text-lg font-bold text-gray-800">{item.titulo}</h2>
+              <p class="text-sm text-gray-600 mt-2">{item.descripcion_resumida}</p>
+            </header>
+            <footer class="mt-auto p-4 border-t border-gray-200">
+              {/* Primera línea: Nombre e ícono de corazón */}
+              <div class="flex justify-between items-center mb-4">
+                <div class="flex items-center space-x-2">
+                  <img
+                    src="https://picsum.photos/32/32"
+                    alt="Instructor"
+                    class="w-8 h-8 rounded-full"
+                  />
+                  <p class="text-sm text-gray-600">{item.instructor}</p>
+                </div>
+                <a
+                  href="#"
+                  class="text-gray-600 hover:text-red-600 transition"
+                >
+                  <i class="fa-regular fa-heart text-xl"></i>
+                </a>
+              </div>
+              {/* Segunda línea: Precio y botón */}
+              <div class="flex justify-between items-center">
+                <p class="text-lg font-semibold text-gray-800">${item.precio}</p>
+                <button class="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600">
+                  <img
+                    src="../anadir-a-la-cesta.png"
+                    alt="Añadir"
+                    class="w-5 h-5"
+                  />
+                </button>
+              </div>
+            </footer>
+          </div>
         </article>
       </div>
     ))}
