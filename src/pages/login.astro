@@ -1,41 +1,7 @@
 ---
-const handleLogin = async (event) => {
-  event.preventDefault();
-
-  const formData = new FormData(event.target);
-  const email = formData.get("email");
-  const password = formData.get("password");
-
-  const API_KEY = "TU_API_KEY"; // Reemplázalo con tu clave de Firebase
-  const url = `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`;
-
-  try {
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ email, password, returnSecureToken: true }),
-    });
-
-    const data = await response.json();
-
-    if (data.idToken) {
-      localStorage.setItem("token", data.idToken); // Guardar el token
-      alert("Inicio de sesión exitoso");
-      window.location.href = "/dashboard"; // Redirigir tras login
-    } else {
-      alert("Error: " + data.error.message);
-    }
-  } catch (error) {
-    console.error("Error al iniciar sesión", error);
-  }
-};
+import Layout from "../layouts/Layout.astro";
 ---
-
-<html lang="es">
-  <head>
-    <title>Iniciar Sesión</title>
-    <link rel="stylesheet" href="/global.css" />
-  </head>
+<Layout>
   <body class="bg-white text-black min-h-screen flex items-center justify-center">
     <div class="max-w-md w-full p-8 border border-gray-300 rounded-lg shadow-md">
       <h1 class="text-2xl font-bold text-center mb-6">Iniciar Sesión</h1>
@@ -57,9 +23,6 @@ const handleLogin = async (event) => {
         <a href="/register" class="text-black underline">Regístrate</a>
       </p>
     </div>
-  </body>
-</html>
+    <script type="module" src="/scripts/auth.js"></script>
+</Layout>
 
-<script>
-  document.querySelector("form").addEventListener("submit", handleLogin);
-</script>

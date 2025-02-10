@@ -122,21 +122,21 @@
       }
       
     ],
-        "users": [
-          {
-            "id_user": 0,
-            "username": "pepe",
-            "password": "hashed_password_pepe",
-            "foto_perfil": "url_de_imagen_pepe",
-            "purchased_courses": [0, 2, 4] 
-          },
-          {
-            "id_user": 1,
-            "username": "prueba",
-            "password": "hashed_password_prueba",
-            "foto_perfil": "url_de_imagen_prueba",
-            "purchased_courses": [1, 3, 5]
-          }
-        ]
-      }
+       "users": {
+  "Z6b5TLoL6mUTIbvxMvgVT2zuDT82": {
+    "username": "pepe",
+    "email": "rubentrollyt@gmail.com",
+    "password": "hashed_password_pepe",
+    "foto_perfil": "url_de_imagen_pepe",
+    "purchased_courses": [0, 2, 4]
+  },
+  "erVDZpKSx3PwiQA5Sj4h8V1XGgt2": {
+    "username": "prueba",
+    "email": "rubengg33@outlook.es",
+    "password": "hashed_password_prueba",
+    "foto_perfil": "url_de_imagen_prueba",
+    "purchased_courses": [1, 3, 5]
+  }
+}
+}
   

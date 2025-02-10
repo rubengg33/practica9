@@ -1,0 +1,23 @@
+const admin = require("firebase-admin");
+const fs = require("fs");
+
+// Inicializar Firebase Admin con la clave JSON de servicio
+const serviceAccount = require("./src/lib/courses-firestore.json"); // Asegúrate de descargarla desde Firebase
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+
+const db = admin.firestore();
+
+// Leer archivo JSON
+const data = JSON.parse(fs.readFileSync("courses-firestore.json", "utf8"));
+
+async function importData() {
+  for (const course of data.courses) {
+    await db.collection("courses").doc(`course-${course.id}`).set(course);
+  }
+  console.log("Importación completada");
+}
+
+importData().catch(console.error);

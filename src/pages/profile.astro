@@ -1,0 +1,30 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout>
+  <body class="bg-white text-black min-h-screen flex items-center justify-center">
+    <div class="max-w-md w-full p-8 border border-gray-300 rounded-lg shadow-md text-center">
+      <h1 class="text-2xl font-bold mb-4">Perfil de Usuario</h1>
+      <img
+        id="profileImage"
+        src="./profile.jpg"
+        alt="Imagen de Perfil"
+        class="w-24 h-24 mx-auto rounded-full border mb-4"
+      />
+      <input type="file" id="uploadImage" accept="image/*" class="hidden" />
+      <button
+        onclick="document.getElementById('uploadImage').click()"
+        class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
+      >
+        Cambiar Imagen de Perfil
+      </button>
+      <p id="userEmail" class="mt-4 text-sm text-gray-600"></p>
+      <button
+        onclick="logout()"
+        class="mt-4 bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700"
+      >
+        Cerrar Sesión
+      </button>
+    </div>
+    <script type="module" src="/scripts/profile.js"></script>
+</Layout>
