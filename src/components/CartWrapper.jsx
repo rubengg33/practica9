@@ -1,20 +1,21 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Cart from "./Cart";
-import { getCourses } from "../lib/courses";
+import { getCartItems } from "../lib/cart";
 
 const CartWrapper = () => {
-  const [cartCourses, setCartCourses] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [userId, setUserId] = useState("");
 
   useEffect(() => {
-    const fetchCourses = async () => {
-      const courses = await getCourses();
-      setCartCourses(courses.filter(course => course.purchased));
-    };
-
-    fetchCourses();
+    // Simulación de obtener el userId desde localStorage o algún otro lugar
+    const storedUserId = localStorage.getItem("userId");
+    if (storedUserId) {
+      setUserId(storedUserId);
+      getCartItems(storedUserId).then((data) => setCourses(data));
+    }
   }, []);
 
-  return <Cart courses={cartCourses} />;
+  return <Cart courses={courses} userId={userId} />;
 };
 
 export default CartWrapper;
