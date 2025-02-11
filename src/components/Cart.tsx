@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button } from "../components/ui/button";
 import { Trash2 } from "lucide-react";
 import { removeFromCart, finalizePurchase, getCartItems } from "../lib/cart";
+import PurchaseDialog from "../components/PurchaseDialog";
 
 interface Course {
   id: string;
@@ -13,6 +14,7 @@ interface Course {
 
 const Cart = ({ userId }: { userId: string }) => {
   const [courses, setCourses] = useState<Course[]>([]);
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
     const fetchCart = async () => {
@@ -31,6 +33,25 @@ const Cart = ({ userId }: { userId: string }) => {
   const calculateTotal = () => {
     return courses.reduce((total, course) => total + course.precio, 0).toFixed(2);
   };
+
+  const handleConfirmPurchase = async () => {
+    try {
+      await finalizePurchase(userId);
+  
+      // Eliminar manualmente los cursos del carrito en la base de datos
+      for (const course of courses) {
+        await removeFromCart(userId, course.id);
+      }
+  
+      setCourses([]); // Vaciar el estado local del carrito
+      setIsDialogOpen(false);
+      alert("¡Compra realizada con éxito! 🎉");
+    } catch (error) {
+      console.error("Error al finalizar la compra:", error);
+      alert("Hubo un problema al procesar la compra. Inténtalo de nuevo.");
+    }
+  };
+  
 
   return (
     <div className="w-full max-w-md bg-white shadow-lg rounded-lg p-6 space-y-4">
@@ -56,9 +77,18 @@ const Cart = ({ userId }: { userId: string }) => {
         <span className="text-lg font-bold">Total:</span>
         <span className="text-xl font-bold">${calculateTotal()}</span>
       </div>
-      <Button className="text-white bg-green-600" onClick={() => finalizePurchase(userId)}>
+      <Button className="text-white bg-green-600" onClick={() => setIsDialogOpen(true)}>
         Finalizar Compra
       </Button>
+
+      {/* Dialog de Confirmación */}
+      <PurchaseDialog
+        courses={courses}
+        total={calculateTotal()}
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onConfirm={handleConfirmPurchase}
+      />
     </div>
   );
 };
