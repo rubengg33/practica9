@@ -17,6 +17,7 @@ const Cart = ({ userId }: { userId: string }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
+    console.log("userId recibido en Cart.tsx:", userId);
     const fetchCart = async () => {
       const items = await getCartItems(userId);
       setCourses(items);

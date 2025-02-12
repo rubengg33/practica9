@@ -10,99 +10,132 @@ interface Course {
 }
 
 export const getCartItems = async (userId: string) => {
-    console.log("Obteniendo items del carrito para userId:", userId);
-  
-    try {
-      const response = await fetch(`${FIRESTORE_URL}/${userId}/cart?key=${API_KEY}`);
-      const data = await response.json();
-      console.log("Respuesta de Firestore:", JSON.stringify(data, null, 2));
-  
-      if (!response.ok) {
-        throw new Error(`Error en Firestore: ${data.error?.message || "Error desconocido"}`);
-      }
-  
-      if (!data.documents) {
-        console.log("No hay elementos en el carrito.");
-        return [];
-      }
-  
-      const cartItems = data.documents.map((doc: any) => ({
-        id: doc.name.split("/").pop(),
-        imagen: doc.fields.imagen?.stringValue || "", // Asegurar que haya un string
-        titulo: doc.fields.titulo?.stringValue || "Sin título",
-        precio: doc.fields.precio?.doubleValue || 0, // Asegurar que sea un número
-        instructor: doc.fields.instructor?.stringValue || "Desconocido",
-      }));
-  
-      console.log("Cursos en el carrito después del mapeo:", cartItems);
-      return cartItems;
-    } catch (error) {
-      console.error("Error obteniendo el carrito:", error);
+  if (!userId || typeof userId !== "string") {
+    console.error("Error: userId inválido", userId);
+    return [];
+  }
+
+  const url = `${FIRESTORE_URL}/${userId}?key=${API_KEY}`;
+  console.log("Obteniendo items del carrito para userId:", userId, "con URL:", url);
+
+  try {
+    const response = await fetch(url);
+    const data = await response.json();
+    console.log("Respuesta de Firestore:", JSON.stringify(data, null, 2));
+
+    if (response.status === 404) {
+      console.log("El carrito no existe, devolviendo array vacío.");
       return [];
     }
-  };
-  
+
+    if (!response.ok) {
+      throw new Error(`Error en Firestore: ${data.error?.message || "Error desconocido"}`);
+    }
+
+    if (!data.fields || !data.fields.items) {
+      console.log("No hay elementos en el carrito.");
+      return [];
+    }
+
+    const cartItems = data.fields.items.arrayValue.values.map((doc: any) => ({
+      id: doc.mapValue.fields.id?.stringValue || "",
+      imagen: doc.mapValue.fields.imagen?.stringValue || "",
+      titulo: doc.mapValue.fields.titulo?.stringValue || "Sin título",
+      precio: doc.mapValue.fields.precio?.doubleValue || 0,
+      instructor: doc.mapValue.fields.instructor?.stringValue || "Desconocido",
+    }));
+
+    console.log("Cursos en el carrito después del mapeo:", cartItems);
+    return cartItems;
+  } catch (error) {
+    console.error("Error obteniendo el carrito:", error);
+    return [];
+  }
+};
+
+
   
 // Agregar curso al carrito usando `PUT` para asignar el ID del curso como nombre del documento
 export const addToCart = async (userId: string, course: any) => {
-    const cartResponse = await fetch(`${FIRESTORE_URL}/${userId}/cart?key=${API_KEY}`);
-    const cartData = await cartResponse.json();
-  
-    if (cartData.documents) {
-      const alreadyInCart = cartData.documents.some((doc: any) => doc.fields.titulo?.stringValue === course.titulo);
-      if (alreadyInCart) {
-        alert("¡Este curso ya está en tu carrito!");
-        return false; // Devuelve false si ya estaba en el carrito
-      }
-    }
-  
-    const response = await fetch(`${FIRESTORE_URL}/${userId}/cart?key=${API_KEY}`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        fields: {
-          titulo: { stringValue: course.titulo },
-          imagen: { stringValue: course.imagen },
-          precio: { doubleValue: course.precio },
-          instructor: { stringValue: course.instructor },
-        },
-      }),
-    });
-  
-    if (!response.ok) {
-      console.error("Error al añadir el curso al carrito.");
+  const cartUrl = `${FIRESTORE_URL}/${userId}?key=${API_KEY}`;
+  const response = await fetch(cartUrl);
+  const cartData = await response.json();
+
+  let existingItems = [];
+
+  if (response.ok && cartData.fields?.items) {
+    existingItems = cartData.fields.items.arrayValue.values || [];
+    const alreadyInCart = existingItems.some(
+      (item: any) => item.mapValue.fields.titulo.stringValue === course.titulo
+    );
+
+    if (alreadyInCart) {
+      alert("¡Este curso ya está en tu carrito!");
       return false;
     }
-  
-    return true; // Devuelve true si el curso se añadió con éxito
-  };
-  
+  }
 
-  
-  
-  
-  
-  
-  
+  existingItems.push({
+    mapValue: {
+      fields: {
+        id: { stringValue: course.id },
+        titulo: { stringValue: course.titulo },
+        imagen: { stringValue: course.imagen },
+        precio: { doubleValue: course.precio },
+        instructor: { stringValue: course.instructor },
+      },
+    },
+  });
+
+  const updateResponse = await fetch(cartUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fields: {
+        items: { arrayValue: { values: existingItems } },
+      },
+    }),
+  });
+
+  if (!updateResponse.ok) {
+    console.error("Error al añadir el curso al carrito.");
+    return false;
+  }
+
+  return true;
+};
+
 
 // Eliminar un curso del carrito
 export const removeFromCart = async (userId: string, courseId: string) => {
-    try {
-      console.log(`Eliminando curso con ID: ${courseId} del carrito de ${userId}`);
-  
-      const response = await fetch(`${FIRESTORE_URL}/${userId}/cart/${courseId}?key=${API_KEY}`, {
-        method: "DELETE",
-      });
-  
-      if (!response.ok) {
-        throw new Error("Error al eliminar el curso del carrito");
-      }
-  
-      console.log("Curso eliminado correctamente.");
-    } catch (error) {
-      console.error("Error al eliminar del carrito:", error);
-    }
-  };
+  const cartUrl = `${FIRESTORE_URL}/${userId}?key=${API_KEY}`;
+  const response = await fetch(cartUrl);
+  const cartData = await response.json();
+
+  if (!response.ok || !cartData.fields?.items) {
+    console.error("No se encontró el carrito.");
+    return;
+  }
+
+  const updatedItems = cartData.fields.items.arrayValue.values.filter(
+    (item: any) => item.mapValue.fields.id.stringValue !== courseId
+  );
+
+  const updateResponse = await fetch(cartUrl, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      fields: {
+        items: { arrayValue: { values: updatedItems } },
+      },
+    }),
+  });
+
+  if (!updateResponse.ok) {
+    console.error("Error al eliminar el curso del carrito.");
+  }
+};
+
   
   
   
