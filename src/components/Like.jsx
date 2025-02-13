@@ -1,73 +1,65 @@
 import { useState, useEffect } from 'react';
 
-const Like = ({ postId, initialLikes, onLikeUpdate }) => {
+const Like = ({ courseId, initialLikes, onLikeUpdate }) => {
   const [likes, setLikes] = useState(initialLikes || 0);
   const [loading, setLoading] = useState(false);
-  const [isLoaded, setIsLoaded] = useState(false); // Estado para controlar si los datos han sido cargados
+  const [isLoaded, setIsLoaded] = useState(false);
 
-  // Este efecto solo se ejecuta una vez cuando se monta el componente
+  const FIREBASE_PROJECT_ID = 'practica9-32729'; // Cambia esto por el ID de tu proyecto en Firebase
+  const FIREBASE_API_KEY = 'AIzaSyAFZJ63l3c1xErKyYnzC12_EP1xkJCuW4Y'; // Opcional si tienes reglas públicas en Firestore
+  const FIREBASE_URL = `https://firestore.googleapis.com/v1/projects/${FIREBASE_PROJECT_ID}/databases/(default)/documents/courses/${courseId}`;
+
   useEffect(() => {
     const fetchLikes = async () => {
       try {
-        const response = await fetch(
-          `https://practica9-32729-default-rtdb.europe-west1.firebasedatabase.app/courses${postId}.json`
-        );
-        if (!response.ok) throw new Error('Error al obtener los likes de Firebase');
+        const response = await fetch(FIREBASE_URL);
+        if (!response.ok) throw new Error('Error al obtener los likes de Firestore');
 
         const data = await response.json();
-        if (data && data.likes !== undefined) {
-          setLikes(data.likes);
+        if (data.fields?.likes) {
+          setLikes(data.fields.likes.integerValue ? parseInt(data.fields.likes.integerValue) : 0);
         }
       } catch (error) {
         console.error('Error al obtener los likes:', error);
       } finally {
-        setIsLoaded(true); // Marcar que los datos han sido cargados
+        setIsLoaded(true);
       }
     };
 
     fetchLikes();
-  }, [postId]);
+  }, [courseId]);
 
   const handleLike = async () => {
-    console.log('Click en botón Like para el post: ' + postId);
     setLoading(true);
-
     try {
-      const response = await fetch(
-        `https://practica9-32729-default-rtdb.europe-west1.firebasedatabase.app/courses/${postId}.json`,
-        {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
+      const newLikes = likes + 1;
+  
+      const response = await fetch(`${FIREBASE_URL}?updateMask.fieldPaths=likes`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          fields: {
+            likes: { integerValue: newLikes.toString() }, // Convertir a string para evitar errores
           },
-          body: JSON.stringify({ likes: likes + 1 }),
-        }
-      );
-
-      if (!response.ok) throw new Error('Error actualizando los likes en Firebase');
-
-      const updatedData = await response.json();
-      console.log('Datos actualizados:', updatedData);
-
-      setLikes(updatedData.likes);
-
-      if (onLikeUpdate) {
-        onLikeUpdate(updatedData.likes);
-      }
+        }),
+      });
+  
+      if (!response.ok) throw new Error('Error actualizando los likes en Firestore');
+  
+      setLikes(newLikes);
+      if (onLikeUpdate) onLikeUpdate(newLikes);
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error al actualizar los likes:', error);
     } finally {
       setLoading(false);
     }
   };
 
-  // Si los datos aún no han sido cargados, muestra un mensaje o un placeholder
   if (!isLoaded) {
     return (
-      <button
-        className="p-2 bg-blue-500 text-white rounded-lg opacity-50 cursor-not-allowed"
-        disabled={true}
-      >
+      <button className="p-2 bg-blue-500 text-white rounded-lg opacity-50 cursor-not-allowed" disabled>
         Cargando...
       </button>
     );
@@ -76,7 +68,7 @@ const Like = ({ postId, initialLikes, onLikeUpdate }) => {
   return (
     <button
       onClick={handleLike}
-      className={`p-2 bg-blue-500 align- text-white rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+      className={`p-2 bg-blue-500 text-white rounded-lg ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
       disabled={loading}
     >
       👍 {likes} {loading && 'Cargando...'}

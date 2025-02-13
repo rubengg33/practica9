@@ -1,0 +1,19 @@
+---
+const title = "Bienvenido a nuestra plataforma de cursos";
+const description = "Aprende desde lo más básico hasta el nivel avanzado";
+const buttonText = "Explora nuestros cursos";
+const backgroundImage = "/hero.jpg";
+---
+
+<div
+  class="relative bg-cover bg-center h-[500px] flex justify-center items-center text-white"
+  style={`background-image: url(${backgroundImage})`}
+>
+  <div class="text-center space-y-6">
+    <h1 class="text-4xl md:text-5xl font-bold">{title}</h1>
+    <p class="text-lg md:text-xl">{description}</p>
+    <button class="px-6 py-3 bg-orange-500 text-white text-lg font-semibold rounded-lg hover:bg-orange-600 transition duration-300">
+      {buttonText}
+    </button>
+  </div>
+</div>

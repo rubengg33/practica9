@@ -136,45 +136,56 @@ export const removeFromCart = async (userId: string, courseId: string) => {
   }
 };
 
-  
-  
-  
-
 // Finalizar compra
 export const finalizePurchase = async (userId: string) => {
-    try {
-      const cartUrl = `${FIRESTORE_URL}/${userId}/items?key=${API_KEY}`;
-      const response = await fetch(cartUrl);
-      const data = await response.json();
-  
-      if (!data.documents) return;
-  
-      const purchasePromises = data.documents.map((doc: { name: string, fields: any }) => {
-        const courseId = doc.name.split("/").pop() || "";
-        const purchaseUrl = `https://firestore.googleapis.com/v1/projects/practica9-32729/databases/(default)/documents/purchases/${userId}/items?documentId=${courseId}&key=${API_KEY}`;
-  
-        return fetch(purchaseUrl, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ fields: doc.fields }),
-        });
+  try {
+    const cartUrl = `${FIRESTORE_URL}/${userId}/items?key=${API_KEY}`;
+    const response = await fetch(cartUrl);
+    const data = await response.json();
+
+    if (!data.documents) return;
+
+    // Obtener los cursos del carrito
+    const purchasedCourses: string[] = data.documents.map(
+      (doc: { name: string }) => doc.name.split("/").pop() || ""
+    );
+
+    // Procesar cada curso individualmente
+    const purchasePromises = purchasedCourses.map(async (courseId) => {
+      const courseDocUrl = `https://firestore.googleapis.com/v1/projects/practica9-32729/databases/(default)/documents/purchases/${userId}/courses/${courseId}?key=${API_KEY}`;
+
+      // En lugar de PATCH, usamos POST para crear un nuevo documento sin sobrescribir
+      await fetch(courseDocUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          fields: {
+            courseId: { stringValue: courseId },
+            purchaseDate: { timestampValue: new Date().toISOString() }, // Fecha de compra
+          },
+        }),
       });
-  
-      await Promise.all(purchasePromises);
-  
-      // Ahora eliminamos los cursos del carrito después de comprarlos
-      const deletePromises = data.documents.map((doc: { name: string }) =>
-        fetch(`${FIRESTORE_URL}/${userId}/items/${doc.name.split("/").pop()}?key=${API_KEY}`, {
-          method: "DELETE",
-        })
-      );
-  
-      await Promise.all(deletePromises);
-  
-      console.log("Compra finalizada correctamente");
-    } catch (error) {
-      console.error("Error finalizando compra: ", error);
-    }
-  };
-  
-  
+    });
+
+    await Promise.all(purchasePromises);
+
+    // Eliminar cursos del carrito después de comprarlos
+    const deletePromises = data.documents.map((doc: { name: string }) =>
+      fetch(`${FIRESTORE_URL}/${userId}/items/${doc.name.split("/").pop()}?key=${API_KEY}`, {
+        method: "DELETE",
+      })
+    );
+
+    await Promise.all(deletePromises);
+
+    console.log("Compra finalizada correctamente");
+  } catch (error) {
+    console.error("Error finalizando compra: ", error);
+  }
+};
+
+
+
+
+
+

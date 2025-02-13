@@ -24,12 +24,18 @@ import CartWrapper from "../components/CartWrapper";
             Perfil
           </a>
         </li>
-        <li>
-          <a href="/blog/Comedia" class="hover:text-white text-gray-500 block font-semibold text-[15px]">Comedia</a>
-        </li>
-        <li>
-          <!-- 🔥 Cargamos el carrito dinámicamente con React -->
-          <CartWrapper client:load />
+         <!-- Menú desplegable del carrito -->
+         <li class="relative">
+          <!-- Icono de carrito -->
+          <button id="cartButton" class="text-white flex items-center gap-2 hover:text-gray-500">
+            <i class="fas fa-shopping-cart"></i> <!-- Icono del carrito (puedes cambiarlo si deseas) -->
+            <span class="text-sm">Carrito</span>
+          </button>
+
+          <!-- Menú desplegable -->
+          <div id="cartMenu" class="absolute top-full right-0 mt-2 w-64 bg-white rounded-lg shadow-lg hidden">
+            <CartWrapper client:load />
+          </div>
         </li>
       </ul>
     </div>

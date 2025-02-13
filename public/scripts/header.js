@@ -10,3 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
         profileLink.href = "/register"; // 🔹 Si no está logueado, va a registro
     }
 });
+document.getElementById('cartButton').addEventListener('click', () => {
+    const cartMenu = document.getElementById('cartMenu');
+    // Toggle para mostrar u ocultar el menú desplegable
+    cartMenu.classList.toggle('hidden');
+  });

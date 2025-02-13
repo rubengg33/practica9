@@ -1,4 +1,6 @@
 ---
+import Hero from '../components/Hero.astro';
+import Slider from '../components/Slider.astro';
 import Layout from "../layouts/Layout.astro";
 import { getCourses } from "../lib/courses";
 import CourseCard from "../components/CourseCard.astro";
@@ -7,5 +9,7 @@ const courses = await getCourses();
 ---
 
 <Layout>
+  <Hero />
+  <Slider courses={courses} />
   <CourseCard courses{courses} />
 </Layout>
