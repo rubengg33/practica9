@@ -8,7 +8,16 @@ import Layout from "../layouts/Layout.astro";
       <form onsubmit="handleLogin(event)">
         <div class="mb-4">
           <label for="email" class="block text-sm font-medium mb-1">Correo</label>
-          <input type="email" id="email" name="email" required class="w-full px-3 py-2 border rounded" />
+          <input 
+            type="email" 
+            id="email" 
+            name="email" 
+            required 
+            class="w-full px-3 py-2 border rounded" 
+            autocomplete="email"
+            list="email-history"
+          />
+          <datalist id="email-history"></datalist>
         </div>
         <div class="mb-4">
           <label for="password" class="block text-sm font-medium mb-1">Contraseña</label>
@@ -23,6 +32,34 @@ import Layout from "../layouts/Layout.astro";
         <a href="/register" class="text-black underline">Regístrate</a>
       </p>
     </div>
+
+    <script>
+      const emailInput = document.getElementById('email');
+      const datalist = document.getElementById('email-history');
+      
+      if (emailInput && emailInput instanceof HTMLInputElement && datalist) {
+        // Obtener historial de correos
+        const emailHistory = JSON.parse(localStorage.getItem('emailHistory') || '[]');
+        // Llenar el datalist con el historial
+        emailHistory.forEach((email: string) => {
+          const option = document.createElement('option');
+          option.value = email;
+          datalist.appendChild(option);
+        });
+        
+        // Actualizar historial al enviar el formulario
+        document.querySelector('form')?.addEventListener('submit', () => {
+          const newEmail = emailInput.value;
+          if (!emailHistory.includes(newEmail)) {
+            emailHistory.unshift(newEmail);
+            // Mantener solo los últimos 5 correos
+            emailHistory.splice(5);
+            localStorage.setItem('emailHistory', JSON.stringify(emailHistory));
+          }
+        });
+      }
+    </script>
     <script type="module" src="/scripts/auth.js"></script>
+  </body>
 </Layout>
 
