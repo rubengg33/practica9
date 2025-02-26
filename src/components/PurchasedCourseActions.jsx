@@ -29,6 +29,10 @@ const PurchasedCourseActions = ({ course }) => {
     setIsPurchased(isInPurchased);
   }, [purchasedCourses, course.id, userId]);
 
+  useEffect(() => {
+    console.log("Estructura del curso:", course);
+  }, [course]);
+
   return (
     <div className="flex justify-between items-center">
       <p className="price-display text-lg font-semibold text-gray-800" data-price={course.precio}>
@@ -37,7 +41,11 @@ const PurchasedCourseActions = ({ course }) => {
       {isPurchased ? (
         <>
           <p className="text-green-600 font-bold">¡Curso comprado!</p>
-          <VideoButton courseId={course.id} />
+          <VideoButton 
+            courseId={course.id} 
+            videoUrl={course.videoUrl} 
+            temario={course.temario.values.map(item => item.stringValue)} 
+          />
         </>
       ) : (
         <AddToCartButton course={course} />
