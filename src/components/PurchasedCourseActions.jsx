@@ -9,7 +9,7 @@ const PurchasedCourseActions = ({ course }) => {
   const [isPurchased, setIsPurchased] = useState(false);
 
   useEffect(() => {
-    const checkUserId = () => {
+    const checkSession = () => {
       const token = localStorage.getItem("token");
       const currentUserId = localStorage.getItem("userId");
       
@@ -22,14 +22,15 @@ const PurchasedCourseActions = ({ course }) => {
       setUserId(currentUserId);
     };
 
-    // Verificación inicial
-    checkUserId();
+    checkSession();
 
-    // Configurar un intervalo para verificar periódicamente
-    const interval = setInterval(checkUserId, 1000);
+    const interval = setInterval(checkSession, 1000);
 
-    // Limpiar el intervalo cuando el componente se desmonte
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      setUserId(null);
+      setIsPurchased(false);
+    };
   }, []);
 
   useEffect(() => {
@@ -50,7 +51,7 @@ const PurchasedCourseActions = ({ course }) => {
       <p className="price-display text-lg font-semibold text-gray-800" data-price={course.precio}>
         {course.precio}
       </p>
-      {isPurchased ? (
+      {isPurchased && userId ? (
         <>
           <p className="text-green-600 font-bold">¡Curso comprado!</p>
           <VideoButton 
