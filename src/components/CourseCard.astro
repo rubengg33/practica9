@@ -2,27 +2,23 @@
 import PurchasedCourseActions from "../components/PurchasedCourseActions";
 import Like from "../components/Like";
 
-type Course = {
-  id: string;
-  slug: string;
-  titulo: string;
-  descripcion_resumida: string;
-  imagen: string;
-  instructor: string;
-  precio: number;
-  likes: number; 
-  video?: string;
-  temario?: string[];
-};
-
-const { courses, userId } = Astro.props as { courses: Course[], userId: string };
+const { courses } = Astro.props;
 ---
+
+<script>
+  // Obtener userId del localStorage
+  const userId = localStorage.getItem("userId");
+  // Actualizar todos los elementos PurchasedCourseActions con el userId
+  document.querySelectorAll('[data-userid]').forEach(element => {
+    element.setAttribute('data-userid', userId || '');
+  });
+</script>
 
 <div class="container mx-auto my-12 px-4 sm:px-6 lg:px-12">
   <div class="flex flex-wrap -mx-2">
-    {courses.map((item) => (
-      <div class="w-full sm:w-1/2 md:w-1/3 lg:w-1/4 px-2 mb-4">
-        <article class="flex flex-col h-full overflow-hidden rounded-lg shadow-lg bg-white border border-gray-200">
+    {courses.map((item: any) => (
+      <div class="w-full sm:w-1/2 lg:w-1/3 p-2">
+        <article class="h-full bg-white rounded-lg shadow-md overflow-hidden flex flex-col">
           <a href={`/course/${item.slug}`}>
             <img src={item.imagen} alt={item.titulo} class="w-full h-40 object-cover"/>
           </a>
@@ -41,7 +37,9 @@ const { courses, userId } = Astro.props as { courses: Course[], userId: string }
                 </div>
                 <Like courseId={item.id} initialLikes={item.likes} onLikeUpdate={() => {}} client:load/>
               </div>
-              <PurchasedCourseActions course={item} userId={userId} client:load />
+              <div data-userid="">
+                <PurchasedCourseActions course={item} client:load />
+              </div>
             </footer>
           </div>
         </article>

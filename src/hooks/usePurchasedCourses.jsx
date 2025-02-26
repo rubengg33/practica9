@@ -21,14 +21,13 @@ const usePurchasedCourses = (userId) => {
 
         // Extraer solo los IDs de los documentos
         const courses = data.documents.map(doc => {
-          const fullPath = doc.name;
-          const courseId = fullPath.split('/').pop();
-          console.log("Procesando documento:", fullPath, "-> ID extraído:", courseId);
+          const courseId = doc.name.split('/').pop();
+          console.log("ID del curso extraído:", courseId);
           return courseId;
         });
         
         setPurchasedCourses(courses);
-        console.log("IDs finales de cursos comprados:", courses);
+        console.log("Lista final de cursos comprados:", courses);
       } catch (error) {
         console.error("Error obteniendo compras:", error);
       }
