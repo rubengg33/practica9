@@ -6,9 +6,7 @@ const { courses } = Astro.props;
 ---
 
 <script>
-  // Obtener userId del localStorage
   const userId = localStorage.getItem("userId");
-  // Actualizar todos los elementos PurchasedCourseActions con el userId
   document.querySelectorAll('[data-userid]').forEach(element => {
     element.setAttribute('data-userid', userId || '');
   });

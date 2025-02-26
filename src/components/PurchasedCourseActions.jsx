@@ -9,29 +9,41 @@ const PurchasedCourseActions = ({ course }) => {
   const [isPurchased, setIsPurchased] = useState(false);
 
   useEffect(() => {
-    const element = document.querySelector('[data-userid]');
-    const id = element?.getAttribute('data-userid');
-    if (id) setUserId(id);
+    const checkUserId = () => {
+      const token = localStorage.getItem("token");
+      const currentUserId = localStorage.getItem("userId");
+      
+      if (!token || !currentUserId) {
+        setUserId(null);
+        setIsPurchased(false);
+        return;
+      }
+      
+      setUserId(currentUserId);
+    };
+
+    // Verificación inicial
+    checkUserId();
+
+    // Configurar un intervalo para verificar periódicamente
+    const interval = setInterval(checkUserId, 1000);
+
+    // Limpiar el intervalo cuando el componente se desmonte
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
-    if (!userId || purchasedCourses.length === 0) return;
-
-    console.log("Estado actual:", {
-      courseId: course.id,
-      purchasedCourses,
-      userId
-    });
+    if (!userId || !purchasedCourses) {
+      setIsPurchased(false);
+      return;
+    }
 
     const isInPurchased = purchasedCourses.includes(course.id);
-    console.log(`¿El curso ${course.id} está en la lista de comprados?:`, isInPurchased);
-    
     setIsPurchased(isInPurchased);
   }, [purchasedCourses, course.id, userId]);
 
-  useEffect(() => {
-    console.log("Estructura del curso:", course);
-  }, [course]);
+  const videoUrl = course.videoUrl;
+  const temario = course.temario?.values?.map(item => item.stringValue) || [];
 
   return (
     <div className="flex justify-between items-center">
@@ -43,8 +55,8 @@ const PurchasedCourseActions = ({ course }) => {
           <p className="text-green-600 font-bold">¡Curso comprado!</p>
           <VideoButton 
             courseId={course.id} 
-            videoUrl={course.videoUrl} 
-            temario={course.temario.values.map(item => item.stringValue)} 
+            videoUrl={videoUrl} 
+            temario={temario} 
           />
         </>
       ) : (
