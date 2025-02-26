@@ -1,35 +1,94 @@
 ---
+import 'swiper/css';
+import 'swiper/css/pagination';
+import 'swiper/css/navigation';
 const { courses } = Astro.props;
 ---
 
-<div class="relative flex justify-center items-center max-w-full overflow-hidden">
-  <div class="flex items-center justify-center px-6 py-12 space-x-8">
-    {courses.length > 0 ? (
-      <div id="courseElement" class="bg-white p-6 rounded-xl shadow-lg text-center w-72 md:w-96">
-        <img class="w-full h-40 object-cover rounded-lg" src={courses[0].imagen} alt={courses[0].titulo} />
-        <h2 class="mt-4 text-2xl font-semibold">{courses[0].titulo}</h2>
-        <p class="mt-2 text-sm text-gray-600">{courses[0].descripcion_resumida}</p>
-        <button class="mt-4 px-6 py-2 bg-blue-500 text-white text-lg font-semibold rounded-lg hover:bg-blue-600 transition duration-300">
-          Ver más
-        </button>
-      </div>
-    ) : (
-      <p class="text-center text-gray-600">Cargando cursos...</p>
-    )}
+<div class="w-full max-w-7xl mx-auto px-4 py-8">
+  <div class="swiper">
+    <div class="swiper-wrapper">
+      {
+        courses.map((course: any) => (
+          <div class="swiper-slide">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden h-[400px] flex flex-col">
+              <div class="h-48 overflow-hidden">
+                <img
+                  src={course.imagen}
+                  alt={course.titulo}
+                  class="w-full h-full object-cover"
+                />
+              </div>
+              <div class="p-4 flex flex-col h-[calc(400px-192px)]">
+                <h3 class="text-lg font-semibold truncate">{course.titulo}</h3>
+                <p class="text-gray-600 text-sm mt-2 line-clamp-2 flex-grow">
+                  {course.descripcion_resumida}
+                </p>
+                <div class="flex items-center justify-between mt-4 pt-2 border-t border-gray-200">
+                  <span class="text-blue-600 font-bold">${course.precio}</span>
+                  <a
+                    href={`/course/${course.slug}`}
+                    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                  >
+                    Ver más
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   </div>
-
-  <button
-    id="prevButton"
-    class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300"
-  >
-    &#10094;
-  </button>
-  <button
-    id="nextButton"
-    class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-800 text-white p-3 rounded-full hover:bg-gray-900 transition duration-300"
-  >
-    &#10095;
-  </button>
 </div>
 
-<script type="module" src="/scripts/slider.js"></script>
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination, Autoplay } from 'swiper/modules';
+
+  new Swiper('.swiper', {
+    modules: [Navigation, Pagination, Autoplay],
+    slidesPerView: 1,
+    spaceBetween: 20,
+    loop: true,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: '.swiper-pagination',
+      clickable: true,
+    },
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev',
+    },
+    breakpoints: {
+      640: {
+        slidesPerView: 2,
+      },
+      768: {
+        slidesPerView: 3,
+      },
+      1024: {
+        slidesPerView: 4,
+      },
+    },
+  });
+</script>
+
+<style>
+  .swiper {
+    padding: 2rem;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    color: #3b82f6;
+  }
+  .swiper-pagination-bullet-active {
+    background: #3b82f6;
+  }
+</style>
