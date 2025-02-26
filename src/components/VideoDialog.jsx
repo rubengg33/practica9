@@ -16,12 +16,7 @@ const VideoDialog = ({ isOpen, onClose, videoUrl, temario }) => {
     <dialog ref={dialogRef} className="bg-white p-6 rounded-lg shadow-lg w-full max-w-2xl">
       <h2 className="text-xl font-bold mb-4">Contenido del Curso</h2>
       <div className="mb-4">
-        <iframe
-          src={videoUrl}
-          title="Video del Curso"
-          className="w-full h-64 rounded-lg"
-          allow="autoplay; encrypted-media"
-        ></iframe>
+      <iframe width="560" height="315" src={videoUrl} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </div>
       <div className="text-sm text-gray-700">
         <h3 className="font-bold mb-2">Temario:</h3>

@@ -1,5 +1,6 @@
 ---
 import CartWrapper from "../components/CartWrapper";
+import CurrencySelector from "../components/CurrencySelector.astro";
 ---
 
 <header class="flex shadow-md py-4 px-4 sm:px-10 bg-black font-[sans-serif] min-h-[70px] tracking-wide relative z-50">
@@ -12,7 +13,7 @@ import CartWrapper from "../components/CartWrapper";
     </a>
 
     <div id="collapseMenu">
-      <ul class="lg:flex gap-x-5">
+      <ul class="lg:flex gap-x-5 items-center">
         <li>
           <a href="/" class="hover:text-gray-500 text-white block font-semibold text-[15px]">Home</a>
         </li>
@@ -36,6 +37,9 @@ import CartWrapper from "../components/CartWrapper";
           <div id="cartMenu" class="absolute top-full right-0 mt-2 w-64 bg-white rounded-lg shadow-lg hidden">
             <CartWrapper client:load />
           </div>
+        </li>
+        <li>
+          <CurrencySelector />
         </li>
       </ul>
     </div>

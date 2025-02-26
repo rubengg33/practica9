@@ -31,7 +31,9 @@ const PurchasedCourseActions = ({ course }) => {
 
   return (
     <div className="flex justify-between items-center">
-      <p className="text-lg font-semibold text-gray-800">${course.precio}</p>
+      <p className="price-display text-lg font-semibold text-gray-800" data-price={course.precio}>
+        {course.precio}
+      </p>
       {isPurchased ? (
         <>
           <p className="text-green-600 font-bold">¡Curso comprado!</p>

@@ -1,0 +1,30 @@
+<div class="relative">
+  <select
+    id="currencySelect"
+    class="bg-transparent text-white border border-gray-600 rounded px-2 py-1 text-sm focus:outline-none focus:border-gray-400"
+  >
+    <option value="USD">$ USD</option>
+    <option value="EUR">€ EUR</option>
+    <option value="GBP">£ GBP</option>
+  </select>
+</div>
+
+<script>
+  const currencySelect = document.getElementById('currencySelect') as HTMLSelectElement;
+  
+  if (currencySelect) {
+    // Establecer el valor inicial desde localStorage
+    currencySelect.value = localStorage.getItem('currency') || 'USD';
+
+    // Manejar cambios
+    currencySelect.addEventListener('change', (e) => {
+      const target = e.target as HTMLSelectElement;
+      localStorage.setItem('currency', target.value);
+      // Disparar un evento de storage para que otros componentes se actualicen
+      window.dispatchEvent(new StorageEvent('storage', {
+        key: 'currency',
+        newValue: target.value
+      }));
+    });
+  }
+</script> 

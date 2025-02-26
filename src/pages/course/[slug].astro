@@ -46,7 +46,9 @@ if (!course) {
 
     <!-- Precio y botón alineados a la derecha -->
     <div class="flex justify-end items-center mt-4 space-x-2">
-      <p class="text-xl font-semibold text-blue-600">Precio: ${course.precio}</p>
+      <p class="price-display text-xl font-semibold text-blue-600" data-price={course.precio}>
+        {course.precio}
+      </p>
       <button class="p-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 flex items-center">
         <img src="../anadir-a-la-cesta.png" alt="Añadir" class="w-4 h-4" />
       </button>
