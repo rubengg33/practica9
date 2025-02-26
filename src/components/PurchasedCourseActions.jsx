@@ -8,14 +8,18 @@ const PurchasedCourseActions = ({ course, userId }) => {
   const [isPurchased, setIsPurchased] = useState(false);
 
   useEffect(() => {
-    if (purchasedCourses.length === 0) return; // Evitar actualizar si aún no hay datos
+    console.log("Estado actual:", {
+      courseId: course.id,
+      purchasedCourses,
+      userId
+    });
 
-    console.log("Cursos comprados:", purchasedCourses); // Debug
-    console.log(`Verificando si ${course.id} está comprado...`);
+    if (purchasedCourses.length === 0) return;
 
-    setIsPurchased(purchasedCourses.includes(course.id));
-
-    console.log(`Resultado para ${course.id}:`, purchasedCourses.includes(course.id));
+    const isInPurchased = purchasedCourses.includes(course.id);
+    console.log(`¿El curso ${course.id} está en la lista de comprados?:`, isInPurchased);
+    
+    setIsPurchased(isInPurchased);
   }, [purchasedCourses, course.id]);
 
   return (

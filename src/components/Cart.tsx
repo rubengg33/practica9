@@ -41,29 +41,29 @@ const Cart = ({ userId }: { userId: string }) => {
         alert("Debes iniciar sesión para comprar.");
         return;
       }
-  
-      // Crear la colección de compras en Firestore
-      const purchaseData = {
-        courses: courses.map((course) => course.id), // Guardar solo los IDs de los cursos comprados
-        timestamp: new Date().toISOString(), // Registrar la fecha de compra
-      };
-  
-      const url = `https://firestore.googleapis.com/v1/projects/practica9-32729/databases/(default)/documents/purchases/${userId}`;
-      
-      await fetch(url, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ fields: { courses: { arrayValue: { values: purchaseData.courses.map(id => ({ stringValue: id })) } } } }),
-      });
-  
-      // Eliminar manualmente los cursos del carrito
+
+      for (const course of courses) {
+        const purchaseUrl = `https://firestore.googleapis.com/v1/projects/practica9-32729/databases/(default)/documents/purchases/${userId}/courses/${course.id}`;
+        
+        await fetch(purchaseUrl, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            fields: {
+              purchaseDate: { timestampValue: new Date().toISOString() }
+            }
+          }),
+        });
+      }
+
+      // Eliminar cursos del carrito
       for (const course of courses) {
         await removeFromCart(userId, course.id);
       }
-  
-      setCourses([]); // Vaciar el carrito local
+
+      setCourses([]); 
       setIsDialogOpen(false);
       alert("¡Compra realizada con éxito! 🎉");
     } catch (error) {
