@@ -91,7 +91,8 @@ uploadImage.addEventListener("change", async (event) => {
 // ✅ Cerrar sesión correctamente
 function logout() {
   console.log("Cerrando sesión...");
-  localStorage.clear(); // Limpia TODO el localStorage
+  localStorage.removeItem("token");
+  localStorage.removeItem("firebaseUserId");
   window.location.href = "/login";
 }
 
