@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { Button } from "../components/ui/button";
 
-const PurchaseDialog = ({ courses, total, isOpen, onClose, onConfirm }) => {
+const PurchaseDialog = ({ courses, total, isOpen, onClose, onConfirm, currency }) => {
   const dialogRef = useRef(null);
 
   useEffect(() => {
@@ -19,13 +19,13 @@ const PurchaseDialog = ({ courses, total, isOpen, onClose, onConfirm }) => {
         {courses.map((course) => (
           <div key={course.id} className="flex justify-between">
             <span>{course.titulo}</span>
-            <span>${course.precio.toFixed(2)}</span>
+            <span>{currency} {course.precio.toFixed(2)}</span>
           </div>
         ))}
       </div>
       <div className="flex justify-between mt-4 font-bold">
         <span>Total:</span>
-        <span>${total}</span>
+        <span>{currency} {total}</span>
       </div>
       <div className="flex justify-end space-x-2 mt-4">
         <Button variant="secondary" onClick={onClose}>

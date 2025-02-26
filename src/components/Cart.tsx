@@ -15,6 +15,7 @@ interface Course {
 const Cart = ({ userId }: { userId: string }) => {
   const [courses, setCourses] = useState<Course[]>([]);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [currentCurrency, setCurrentCurrency] = useState('USD');
 
   useEffect(() => {
     console.log("userId recibido en Cart.tsx:", userId);
@@ -25,6 +26,30 @@ const Cart = ({ userId }: { userId: string }) => {
 
     fetchCart();
   }, [userId]);
+  useEffect(() => {
+    const handleCurrencyChange = (e: StorageEvent) => {
+      if (e.key === 'currency') {
+        setCurrentCurrency(e.newValue || 'USD');
+      }
+    };
+
+    window.addEventListener('storage', handleCurrencyChange);
+    setCurrentCurrency(localStorage.getItem('currency') || 'USD');
+
+    return () => {
+      window.removeEventListener('storage', handleCurrencyChange);
+    };
+  }, []);
+
+  const convertPrice = (price: number) => {
+    const rates = {
+      EUR: 0.91,
+      GBP: 0.79,
+      USD: 1
+    };
+    const converted = price * rates[currentCurrency as keyof typeof rates];
+    return converted.toFixed(2);
+  };
 
   const handleRemove = async (courseId: string) => {
     await removeFromCart(userId, courseId);
@@ -32,7 +57,7 @@ const Cart = ({ userId }: { userId: string }) => {
   };
 
   const calculateTotal = () => {
-    return courses.reduce((total, course) => total + course.precio, 0).toFixed(2);
+    return convertPrice(courses.reduce((total, course) => total + course.precio, 0));
   };
 
   const handleConfirmPurchase = async () => {
@@ -78,13 +103,12 @@ const Cart = ({ userId }: { userId: string }) => {
       <h2 className="text-2xl font-bold text-center mb-4">Carrito de Cursos</h2>
       <div className="space-y-4">
         {courses.map((course) => (
-          <div key={course.id} className="flex items-center justify-between border-b pb-2">
-            <div className="flex flex-row items-center space-x-4">
-              <img src={course.imagen} alt={course.titulo} className="w-16 h-16 object-cover rounded-md" />
-              <div>
-                <h3 className="font-semibold text-sm">{course.titulo}</h3>
-                <p className="text-muted-foreground text-xs">Por {course.instructor}</p>
-                <p className="text-primary font-bold">${course.precio.toFixed(2)}</p>
+          <div key={course.id} className="flex items-center justify-between">
+            <div className="flex items-center">
+              <img src={course.imagen} alt={course.titulo} className="w-12 h-12 object-cover rounded" />
+              <div className="ml-4">
+                <h3 className="font-semibold">{course.titulo}</h3>
+                <p className="text-sm text-gray-500">{currentCurrency} {convertPrice(course.precio)}</p>
               </div>
             </div>
             <Button variant="destructive" size="icon" className="h-8 w-8 ml-2" onClick={() => handleRemove(course.id)}>
@@ -95,7 +119,7 @@ const Cart = ({ userId }: { userId: string }) => {
       </div>
       <div className="flex justify-between items-center mt-4">
         <span className="text-lg font-bold">Total:</span>
-        <span className="text-xl font-bold">${calculateTotal()}</span>
+        <span className="text-xl font-bold">{currentCurrency} {calculateTotal()}</span>
       </div>
       <Button className="text-white bg-green-600" onClick={() => setIsDialogOpen(true)}>
         Finalizar Compra
@@ -108,6 +132,7 @@ const Cart = ({ userId }: { userId: string }) => {
         isOpen={isDialogOpen}
         onClose={() => setIsDialogOpen(false)}
         onConfirm={handleConfirmPurchase}
+        currency={currentCurrency}
       />
     </div>
   );
